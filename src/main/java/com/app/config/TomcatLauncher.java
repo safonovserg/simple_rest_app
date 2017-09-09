@@ -38,7 +38,7 @@ public class TomcatLauncher {
         final ResourceConfig application = new ResourceConfig()
                 .packages("com.app.web");
 
-        // also possible to use new ResourceConfig(MoneyController.class)
+        // also possible to use new ResourceConfig(AccountController.class)
         Tomcat.addServlet(context, "jersey-container-servlet",
                           new ServletContainer(application));
 
@@ -65,7 +65,7 @@ public class TomcatLauncher {
         await();
     }
 
-    public void await() {
+    private void await() {
         while (!terminated) {
             try {
                 Thread.sleep(10000L);

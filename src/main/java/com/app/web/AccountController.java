@@ -15,7 +15,7 @@ import java.math.BigDecimal;
  * Created by Sergey on 06.09.2017.
  */
 @Path("/api")
-public class MoneyController {
+public class AccountController {
 
     private AccountService accountService;
 
