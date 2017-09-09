@@ -36,6 +36,7 @@ public class MoneyController {
     @Path("createAccount")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createAccount(Account account) {
+        // TODO add converter layer, service should not interact with request
         AccountAdapter responseAdapter = new AccountAdapter();
         accountService.create(account, responseAdapter);
 
