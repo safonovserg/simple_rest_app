@@ -18,12 +18,10 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * Actually it is integration test
- *
+/***
  * Created by Sergey on 06.09.2017.
  */
-public class MoneyControllerTest {
+public class MoneyControllerIT {
 
     private TomcatLauncher server;
     private WebTarget target;
