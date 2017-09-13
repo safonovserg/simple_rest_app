@@ -15,6 +15,9 @@ public class RuntimeExceptionMapper implements ExceptionMapper<RuntimeException>
     public Response toResponse(RuntimeException e) {
         if (e instanceof WebApplicationException) {
             return ((WebApplicationException) e).getResponse();
+        } else if (e instanceof  IllegalArgumentException){
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .build();
         }
         // LOGGER.log(Level.WARNING, "RuntimeException occurred", e); TODO add logger
 

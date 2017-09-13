@@ -2,6 +2,7 @@ package com.app.web;
 
 import com.app.config.TomcatLauncher;
 import com.app.model.Account;
+import com.app.web.dto.AccountDTO;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.junit.After;
@@ -60,19 +61,27 @@ public class MoneyControllerIT {
 
     @Test
     public void createAccount() {
-        Account account = new Account("095512322","Luke", "Skywalker", new BigDecimal(22121));
+        AccountDTO account = new AccountDTO("095512322","Luke", "Skywalker", new BigDecimal(22121));
 
         Response responseMsg = target.path("/api/createAccount").request().post(Entity.json(new Gson().toJson(account)));
         assertEquals("Response is ok", 200, responseMsg.getStatus());
     }
 
     @Test
+    public void createAccountNull() {
+        AccountDTO account = new AccountDTO("095512322",null, "Skywalker", new BigDecimal(22121));
+
+        Response responseMsg = target.path("/api/createAccount").request().post(Entity.json(new Gson().toJson(account)));
+        assertEquals("Response is not ok", 400, responseMsg.getStatus());
+    }
+
+    @Test
     public void transferMoney() {
-        List<Account> resultAccounts = createAccounts();
+        List<AccountDTO> resultAccounts = createAccounts();
 
         BigDecimal subtractAmount = new BigDecimal(123);
-        Account resultAccountsAccount1 = resultAccounts.get(0);
-        Account resultAccountsAccount2 = resultAccounts.get(1);
+        AccountDTO resultAccountsAccount1 = resultAccounts.get(0);
+        AccountDTO resultAccountsAccount2 = resultAccounts.get(1);
         Response responseTransfer = target.path("/api/transfer")
                                                 .queryParam("from", resultAccountsAccount1.getPhoneNumber())
                                                 .queryParam("to", resultAccountsAccount2.getPhoneNumber())
@@ -83,7 +92,7 @@ public class MoneyControllerIT {
         assertMoneyTransferred(subtractAmount, resultAccountsAccount1, resultAccountsAccount2);
     }
 
-    private void assertMoneyTransferred(BigDecimal substractAmount, Account resultAccountsAccount1, Account resultAccountsAccount2) {
+    private void assertMoneyTransferred(BigDecimal substractAmount, AccountDTO resultAccountsAccount1, AccountDTO resultAccountsAccount2) {
         Response responseAfterTransfer = target.path("/api/getAccounts").request().get();
         List<Account> responseAccountsAfterTransfer = new Gson().fromJson(responseAfterTransfer.readEntity(String.class), new TypeToken<List<Account>>() {}.getType());
         System.out.println(responseAccountsAfterTransfer);
@@ -99,19 +108,19 @@ public class MoneyControllerIT {
         assertEquals("Money transferred", 2, countTransferred);
     }
 
-    private List<Account> createAccounts() {
-        Account account = new Account("095512322","Luke", "Skywalker", new BigDecimal(22121));
+    private List<AccountDTO> createAccounts() {
+        AccountDTO account = new AccountDTO("095512322","Luke", "Skywalker", new BigDecimal(22121));
         Response responseAcc1 = target.path("/api/createAccount").request().post(Entity.json(new Gson().toJson(account)));
         assertEquals("Response is ok", 200, responseAcc1.getStatus());
 
 
-        Account account2 = new Account("095512399", "Obi-Wan", "Kenobi", new BigDecimal(222000));
+        AccountDTO account2 = new AccountDTO("095512399", "Obi-Wan", "Kenobi", new BigDecimal(222000));
         Response responseAcc2 = target.path("/api/createAccount").request().post(Entity.json(new Gson().toJson(account2)));
         assertEquals("Response is ok", 200, responseAcc2.getStatus());
 
 
         Response responseAccounts = target.path("/api/getAccounts").request().get();
-        List<Account> resultAccounts = new Gson().fromJson(responseAccounts.readEntity(String.class), new TypeToken<List<Account>>() {}.getType());
+        List<AccountDTO> resultAccounts = new Gson().fromJson(responseAccounts.readEntity(String.class), new TypeToken<List<AccountDTO>>() {}.getType());
         System.out.println(resultAccounts);
 
         long countCreated = resultAccounts.stream()
