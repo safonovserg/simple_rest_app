@@ -17,10 +17,10 @@ public class AccountConverter {
     }
 
     public static AccountDTO toAccountDTO(Account account){
-        return new AccountDTO(account.getPhoneNumber(),account.getFirstName(),account.getLastName(),account.getAmount());
+        return new AccountDTO(account.getPhoneNumber(), account.getFirstName(), account.getLastName(), account.getAmount());
     }
 
     public static Account toAccount(AccountDTO account){
-        return new Account(account.getPhoneNumber(),account.getFirstName(),account.getLastName(),account.getAmount());
+        return new Account(account.getPhoneNumber(), account.getFirstName(), account.getLastName(), account.getAmount());
     }
 }
