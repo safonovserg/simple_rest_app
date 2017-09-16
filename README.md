@@ -1,5 +1,5 @@
 # simple_rest_app
-It is REST Java app that is packaged in executable jar.
+It is REST Java app to transfer money between accounts. Packaged in executable jar.
 
 Used stack: jdk 8, Jersey 2, embedded Tomcat 8, Guice 4, Gson 2
 
