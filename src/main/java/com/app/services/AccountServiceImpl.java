@@ -21,11 +21,11 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account create(Account account, AccountAdapter responseAdapter) {
+    public Account save(Account account, AccountAdapter responseAdapter) {
         try {
             // without sync (because it is not possible to create account from two threads)
             responseAdapter.success();
-            return accountDAO.create(account);
+            return accountDAO.save(account);
         } catch (IllegalArgumentException ex) {
             responseAdapter.clientError();
         } catch (Exception r) {
@@ -60,8 +60,8 @@ public class AccountServiceImpl implements AccountService {
                 }
             }
             // in real data storage we need to save it, in our case reference is enough
-            //accountDAO.createOrUpdate(ac2);
-            //accountDAO.createOrUpdate(ac1);
+            accountDAO.save(ac2);
+            accountDAO.save(ac1);
             responseAdapter.success();
         } catch (IllegalArgumentException ex){
             responseAdapter.clientError();

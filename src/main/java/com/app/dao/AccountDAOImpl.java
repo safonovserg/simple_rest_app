@@ -15,11 +15,9 @@ public class AccountDAOImpl implements AccountDAO {
     private final Map<String,Account> storage = new ConcurrentHashMap<>();
 
     @Override
-    public Account create(Account account) {
+    public Account save(Account account) {
         if (!storage.containsKey(account.getPhoneNumber())) {
-            storage.putIfAbsent(account.getPhoneNumber(), account);
-        } else {
-            throw new IllegalArgumentException("email already exists");
+            return storage.putIfAbsent(account.getPhoneNumber(), account);
         }
         return account;
     }

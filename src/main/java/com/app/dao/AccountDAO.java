@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface AccountDAO {
 
-    Account create(Account account);
+    Account save(Account account);
 
     List<Account> getAccounts();
 

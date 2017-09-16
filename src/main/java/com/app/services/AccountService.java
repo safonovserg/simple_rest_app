@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface AccountService {
 
-     Account create(Account account, AccountAdapter responseAdapter);
+     Account save(Account account, AccountAdapter responseAdapter);
 
      List<Account> getAccounts();
 

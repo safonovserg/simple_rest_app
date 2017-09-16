@@ -40,7 +40,7 @@ public class AccountController {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createAccount(AccountDTO accountDto) {
         AccountAdapter responseAdapter = new AccountAdapter();
-        accountService.create(toAccount(accountDto), responseAdapter);
+        accountService.save(toAccount(accountDto), responseAdapter);
         return Response.status(responseAdapter.getStatusCode()).build();
     }
 
