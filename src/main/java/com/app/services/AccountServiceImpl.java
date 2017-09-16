@@ -46,9 +46,7 @@ public class AccountServiceImpl implements AccountService {
             Account ac1 = accountDAO.getAccount(fromId);
             Account ac2 = accountDAO.getAccount(toId);
 
-            if(ac1 == null || ac2 == null){
-                throw new IllegalArgumentException("missing account");
-            }
+            validateIncomingData(amount, ac1, ac2);
 
             //to prevent deadlock, order of taking monitors should be always the same
             Object lock1 = ac1.getPhoneNumber().compareTo(ac2.getPhoneNumber()) < 0 ? ac1 : ac2;
@@ -67,6 +65,15 @@ public class AccountServiceImpl implements AccountService {
             responseAdapter.clientError();
         } catch (Exception ex){
             responseAdapter.serverError();
+        }
+    }
+
+    private void validateIncomingData(BigDecimal amount, Account ac1, Account ac2) {
+        if(ac1 == null || ac2 == null){
+            throw new IllegalArgumentException("missing account");
+        }
+        if(amount.compareTo(BigDecimal.ZERO) == 0 || amount.compareTo(BigDecimal.ZERO) == -1){
+            throw new IllegalArgumentException("wrong amount");
         }
     }
 }
