@@ -1,5 +1,6 @@
 # simple_rest_app
 It is REST Java app to transfer money between accounts. Packaged in executable jar.
+TODO: money thafer is valid only for single vm, because use synchronized blocks. Need to enhance solution with smth like distributed locks log, see article example https://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying
 
 Used stack: jdk 8, Jersey 2, embedded Tomcat 8, Guice 4, Gson 2
 
